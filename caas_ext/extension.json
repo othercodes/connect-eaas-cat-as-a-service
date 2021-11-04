@@ -1,0 +1,60 @@
+{
+  "name": "Cat as a Service",
+  "description": "Get a cute cat image.",
+  "version": "0.1.0",
+  "readme_url": "https://example.com/README.md",
+  "changelog_url": "https://example.com/CHANGELOG.md",
+  "capabilities": {
+    "asset_purchase_request_processing": [
+      "draft",
+      "tiers_setup",
+      "pending",
+      "inquiring",
+      "approved",
+      "failed",
+      "scheduled",
+      "revoking",
+      "revoked"
+    ],
+    "asset_change_request_processing": [
+      "draft",
+      "tiers_setup",
+      "pending",
+      "inquiring",
+      "approved",
+      "failed",
+      "scheduled",
+      "revoking",
+      "revoked"
+    ],
+    "asset_cancel_request_processing": [
+      "draft",
+      "tiers_setup",
+      "pending",
+      "inquiring",
+      "approved",
+      "failed",
+      "scheduled",
+      "revoking",
+      "revoked"
+    ],
+    "asset_purchase_request_validation": [
+      "draft",
+      "tiers_setup",
+      "pending",
+      "inquiring",
+      "approved",
+      "failed"
+    ],
+    "asset_change_request_validation": [
+      "draft",
+      "tiers_setup",
+      "pending",
+      "inquiring",
+      "approved",
+      "failed"
+    ],
+    "product_action_execution": [],
+    "product_custom_event_processing": []
+  }
+}

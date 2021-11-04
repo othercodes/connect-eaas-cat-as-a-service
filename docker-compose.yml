@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  cat_as_a_service_dev:
+    container_name: cat_as_a_service_dev
+    image: cloudblueconnect/connect-extension-runner:23.8
+    command: cextrun -d
+    volumes: 
+      - .:/extension
+    env_file:
+      - .cat_as_a_service_dev.env
+
+  cat_as_a_service_bash:
+    container_name: cat_as_a_service_bash
+    image: cloudblueconnect/connect-extension-runner:23.8
+    working_dir: /extension
+    command: /bin/bash
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/extension
+    env_file:
+      - .cat_as_a_service_dev.env
+
+  cat_as_a_service_test:
+    container_name: cat_as_a_service_test
+    image: cloudblueconnect/connect-extension-runner:23.8
+    working_dir: /extension
+    command: /bin/bash -c "poetry install && pytest --verbose --cov=caas_ext --cov-report=html --cov-report=term-missing:skip-covered"
+    volumes:
+      - .:/extension
+    env_file:
+      - .cat_as_a_service_dev.env
