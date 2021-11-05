@@ -4,3 +4,5 @@ htmlcov
 coverage.xml
 .cat_as_a_service_dev.env
 .idea/
+dist/
+poetry.lock

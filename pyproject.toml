@@ -5,7 +5,8 @@ description = "Get a cute cat image."
 authors = ["Unay Santisteban"]
 license = "MIT"
 packages = [
-    { include = "caas_ext" }
+    { include = "caas_ext" },
+    { include = "cats_as_a_service" }
 ]
 readme = "./README.md"
 
@@ -22,7 +23,7 @@ pytest-cov = "^2.10.1"
 pytest-mock = "^3.3.1"
 pytest-asyncio = "^0.15.1"
 pytest-httpx = "^0.12.0"
-coverage = {extras = ["toml"], version = "^5.3"}
+coverage = { extras = ["toml"], version = "^5.3" }
 responses = "^0.12.0"
 flake8 = "~3.8"
 flake8-bugbear = "~20"
@@ -42,7 +43,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 testpaths = "tests"
-addopts = "--cov=caas_ext --cov-report=term-missing:skip-covered --cov-report=html --cov-report=xml"
+addopts = "--cov=caas_ext --cov=cats_as_a_service --cov-report=html --cov-report=xml --cov-report=term-missing:skip-covered"
 
 [tool.coverage.run]
 branch = true

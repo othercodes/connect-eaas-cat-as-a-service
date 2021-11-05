@@ -1,11 +1,16 @@
 from collections import namedtuple
 from collections.abc import Iterable
 from types import MethodType
+from typing import List, Optional
 from urllib.parse import parse_qs
 from connect.client import ConnectClient
 import pytest
 import requests
 import responses
+import os
+
+from cats_as_a_service.orders.domain.contracts import OrderSource
+from cats_as_a_service.subscriptions.domain.contracts import SubscriptionSource
 
 ConnectResponse = namedtuple(
     'ConnectResponse',
@@ -143,3 +148,53 @@ def sync_client_factory():
         return client
 
     return _create_sync_client
+
+
+@pytest.fixture
+def fake_subscription_source():
+    class _MockSubscriptionSource(SubscriptionSource):
+        def __init__(self, data: dict):
+            self._data = data
+
+        def id(self) -> Optional[str]:
+            return self._data.get('id', 'AS-0000-0000-0000')
+
+        def items(self) -> List[dict]:
+            return self._data.get('items', [])
+
+    def _make_mock_subscription_source(source: dict) -> SubscriptionSource:
+        return _MockSubscriptionSource(source)
+
+    return _make_mock_subscription_source
+
+
+@pytest.fixture
+def fake_order_source():
+    class _MockOrderSource(OrderSource):
+        def id(self) -> Optional[str]:
+            return self._data.get('id')
+
+        def __init__(self, data: dict):
+            self._data = data
+
+        def order_type(self) -> str:
+            return self._data.get('order_type', 'ASC')
+
+        def categories(self) -> List[int]:
+            return self._data.get('categories', [])
+
+        def amount(self) -> int:
+            return self._data.get('amount', 0)
+
+    def _make_mock_order_source(source: dict) -> OrderSource:
+        return _MockOrderSource(source)
+
+    return _make_mock_order_source
+
+
+@pytest.fixture
+def config():
+    return {
+        'api_key': os.getenv('CAT_API_KEY'),
+        'api_url': os.getenv('CAT_API_URL'),
+    }

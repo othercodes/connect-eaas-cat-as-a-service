@@ -4,4 +4,4 @@ show-source = True
 max-line-length = 100
 application-import-names = smarkets
 max-cognitive-complexity = 15
-ignore = FI1,I100,W503
+ignore = FI1,I100,W503,FI58,I201
