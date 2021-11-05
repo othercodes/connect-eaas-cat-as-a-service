@@ -33,4 +33,6 @@ jobs:
         flake8 .
     - name: Testing
       run: |
-        pytest
+        export CAT_API_KEY="${{ secrets.CAT_API_KEY }}"
+        export CAT_API_URL="${{ secrets.CAT_API_URL }}"
+        poetry run pytest
