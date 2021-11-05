@@ -2,57 +2,25 @@
   "name": "Cat as a Service",
   "description": "Get a cute cat image.",
   "version": "0.1.0",
-  "readme_url": "https://example.com/README.md",
-  "changelog_url": "https://example.com/CHANGELOG.md",
+  "readme_url": "https://github.com/othercodes/connect-eaas-cat-as-a-service/blob/main/README.md",
+  "changelog_url": "https://github.com/othercodes/connect-eaas-cat-as-a-service/blob/main/CHANGELOG.md",
   "capabilities": {
     "asset_purchase_request_processing": [
-      "draft",
-      "tiers_setup",
-      "pending",
-      "inquiring",
-      "approved",
-      "failed",
-      "scheduled",
-      "revoking",
-      "revoked"
+      "pending"
     ],
     "asset_change_request_processing": [
-      "draft",
-      "tiers_setup",
-      "pending",
-      "inquiring",
-      "approved",
-      "failed",
-      "scheduled",
-      "revoking",
-      "revoked"
+      "pending"
     ],
     "asset_cancel_request_processing": [
-      "draft",
-      "tiers_setup",
-      "pending",
-      "inquiring",
-      "approved",
-      "failed",
-      "scheduled",
-      "revoking",
-      "revoked"
+      "pending"
     ],
     "asset_purchase_request_validation": [
       "draft",
-      "tiers_setup",
-      "pending",
-      "inquiring",
-      "approved",
-      "failed"
+      "inquiring"
     ],
     "asset_change_request_validation": [
       "draft",
-      "tiers_setup",
-      "pending",
-      "inquiring",
-      "approved",
-      "failed"
+      "pending"
     ],
     "product_action_execution": [],
     "product_custom_event_processing": []
