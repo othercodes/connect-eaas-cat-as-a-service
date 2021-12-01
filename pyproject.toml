@@ -16,6 +16,7 @@ readme = "./README.md"
 [tool.poetry.dependencies]
 python = "^3.8"
 connect-extension-runner = "24.5"
+connect-devops-testing-library = "^24.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"
