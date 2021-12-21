@@ -3,6 +3,7 @@
 # Copyright (c) 2021, Unay Santisteban
 # All rights reserved.
 #
+from connect.toolkit.requests import RequestBuilder
 from connect.eaas.extension import (
     CustomEventResponse,
     Extension,
@@ -11,12 +12,12 @@ from connect.eaas.extension import (
     ValidationResponse,
 )
 
+from caas_ext.flows.purchase_flow import PurchaseFlow
+
 
 class CatAsAServiceExtension(Extension):
-
     def process_asset_purchase_request(self, request):
-        self.logger.info(f"Obtained request with id {request['id']}")
-        return ProcessingResponse.done()
+        return PurchaseFlow(self.client, self.logger, self.config).process(RequestBuilder(request))
 
     def process_asset_change_request(self, request):
         self.logger.info(f"Obtained request with id {request['id']}")
