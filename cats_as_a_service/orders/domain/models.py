@@ -41,3 +41,11 @@ class Order:
         self.order_type = order_type
         self.categories = categories
         self.amount = amount
+
+    def __str__(self) -> str:
+        return "{id}: ({order_type}, {categories}) x{amount}".format(
+            id=self.id.value,
+            order_type=self.order_type.value,
+            categories=self.categories.value,
+            amount=self.amount.value,
+        )
