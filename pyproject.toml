@@ -17,6 +17,7 @@ readme = "./README.md"
 python = "^3.8"
 connect-extension-runner = "24.5"
 connect-devops-testing-library = "^24.1"
+connect-processor-toolkit = {git = "https://github.com/othercodes/connect-processor-toolkit", rev = "main"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"
@@ -47,16 +48,16 @@ testpaths = "tests"
 addopts = "--cov=caas_ext --cov=cats_as_a_service --cov-report=html --cov-report=xml --cov-report=term-missing:skip-covered"
 
 [tool.coverage.run]
+omit = ["tests/*", "venv*/*", "setup.py"]
+relative_files = true
 branch = true
 
 [tool.coverage.report]
-omit = [
-]
-
 exclude_lines = [
     "pragma: no cover",
     "def __str__",
     "def __repr__",
+    "import",
     "raise NotImplementedError",
     "if __name__ == .__main__.:",
 ]
