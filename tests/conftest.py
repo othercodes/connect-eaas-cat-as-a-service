@@ -151,6 +151,17 @@ def sync_client_factory():
 
 
 @pytest.fixture
+def live_client_factory():
+    def _create_live_client():
+        return ConnectClient(
+            api_key=os.getenv('API_KEY'),
+            endpoint=os.getenv('SERVER_ADDRESS'),
+        )
+
+    return _create_live_client
+
+
+@pytest.fixture
 def fake_subscription_source():
     class _MockSubscriptionSource(SubscriptionSource):
         def __init__(self, data: dict):
