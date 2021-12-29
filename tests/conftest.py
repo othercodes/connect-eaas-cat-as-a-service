@@ -1,3 +1,4 @@
+import json
 from collections import namedtuple
 from collections.abc import Iterable
 from types import MethodType
@@ -209,3 +210,12 @@ def config():
         'api_key': os.getenv('CAT_API_KEY'),
         'api_url': os.getenv('CAT_API_URL'),
     }
+
+
+@pytest.fixture
+def load_json():
+    def _load_json_file(path: str) -> dict:
+        with open(path) as file:
+            return json.load(file)
+
+    return _load_json_file

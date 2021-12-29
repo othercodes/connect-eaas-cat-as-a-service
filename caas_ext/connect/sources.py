@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from connect.toolkit.requests import RequestBuilder
+from connect.processors_toolkit.requests import RequestBuilder
 
 from cats_as_a_service.orders.domain.contracts import OrderSource
 
