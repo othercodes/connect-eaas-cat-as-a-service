@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum, unique
 from typing import List
-from cats_as_a_service.shared.domain.models import ID
+from cats.shared.domain.models import ID
 
 
 @dataclass(frozen=True)

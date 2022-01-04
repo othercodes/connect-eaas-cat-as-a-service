@@ -1,4 +1,4 @@
-from cats_as_a_service.orders.application.services import order_validator
+from cats.orders.application.services import order_validator
 
 
 def test_should_successfully_validate_order_valid_arguments(fake_order_source):

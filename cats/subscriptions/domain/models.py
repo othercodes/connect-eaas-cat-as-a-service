@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, List
-from cats_as_a_service.shared.domain.models import ID
+from cats.shared.domain.models import ID
 
 
 @dataclass(frozen=True)

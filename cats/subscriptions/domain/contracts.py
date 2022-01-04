@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import List, Optional
-from cats_as_a_service.shared.domain.models import ID
-from cats_as_a_service.subscriptions.domain.models import Subscription
+from cats.shared.domain.models import ID
+from cats.subscriptions.domain.models import Subscription
 
 
 class SubscriptionSource(metaclass=ABCMeta):  # pragma: no cover

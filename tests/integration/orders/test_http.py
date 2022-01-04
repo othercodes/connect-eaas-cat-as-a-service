@@ -1,5 +1,5 @@
-from cats_as_a_service.orders.domain.services import order_builder
-from cats_as_a_service.orders.infrastructure.http import HTTPOrderRepository
+from cats.orders.domain.services import order_builder
+from cats.orders.infrastructure.http import HTTPOrderRepository
 
 
 def test_should_successfully_place_order_adding_items(fake_order_source, config):

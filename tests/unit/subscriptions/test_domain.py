@@ -1,7 +1,7 @@
 import pytest
-from cats_as_a_service.subscriptions.domain.exceptions import SubscriptionBuildingFailure
-from cats_as_a_service.subscriptions.domain.models import Subscription
-from cats_as_a_service.subscriptions.domain.services import subscription_builder
+from cats.subscriptions.domain.exceptions import SubscriptionBuildingFailure
+from cats.subscriptions.domain.models import Subscription
+from cats.subscriptions.domain.services import subscription_builder
 
 
 def test_should_success_building_a_subscription(fake_subscription_source):

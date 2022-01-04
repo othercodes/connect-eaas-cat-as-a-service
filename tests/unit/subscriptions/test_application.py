@@ -1,4 +1,4 @@
-from cats_as_a_service.subscriptions.application.services import subscription_validator
+from cats.subscriptions.application.services import subscription_validator
 
 
 def test_should_successfully_validate_subscription_valid_arguments(fake_subscription_source):

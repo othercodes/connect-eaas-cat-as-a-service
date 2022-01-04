@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from connect.processors_toolkit.requests import RequestBuilder
 
-from cats_as_a_service.orders.domain.contracts import OrderSource
+from cats.orders.domain.contracts import OrderSource
 
 
 class ConnectOrderSource(OrderSource):

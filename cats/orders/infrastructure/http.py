@@ -1,6 +1,6 @@
-from cats_as_a_service.orders.domain.contracts import OrderRepository
-from cats_as_a_service.orders.domain.models import Order
-from cats_as_a_service.shared.infrastructure.http import HTTPClient
+from cats.orders.domain.contracts import OrderRepository
+from cats.orders.domain.models import Order
+from cats.shared.infrastructure.http import HTTPClient
 import itertools
 
 

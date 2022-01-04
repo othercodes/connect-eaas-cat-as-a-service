@@ -1,12 +1,12 @@
 from typing import List, Optional
-from cats_as_a_service.shared.domain.models import ID
-from cats_as_a_service.shared.infrastructure.http import HTTPClient
-from cats_as_a_service.subscriptions.domain.contracts import (
+from cats.shared.domain.models import ID
+from cats.shared.infrastructure.http import HTTPClient
+from cats.subscriptions.domain.contracts import (
     SubscriptionRepository,
     SubscriptionSource,
 )
-from cats_as_a_service.subscriptions.domain.models import Subscription
-from cats_as_a_service.subscriptions.domain.services import subscription_builder
+from cats.subscriptions.domain.models import Subscription
+from cats.subscriptions.domain.services import subscription_builder
 
 
 class HTTPSubscriptionSource(SubscriptionSource):

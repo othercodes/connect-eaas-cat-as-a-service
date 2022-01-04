@@ -1,7 +1,7 @@
 import pytest
-from cats_as_a_service.orders.domain.exceptions import OrderBuildingFailure
-from cats_as_a_service.orders.domain.models import Order
-from cats_as_a_service.orders.domain.services import order_builder
+from cats.orders.domain.exceptions import OrderBuildingFailure
+from cats.orders.domain.models import Order
+from cats.orders.domain.services import order_builder
 
 
 def test_builder_should_success_building_a_order(fake_order_source):

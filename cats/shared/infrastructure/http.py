@@ -2,7 +2,7 @@ from typing import List
 
 from requests import Response
 
-from cats_as_a_service.shared.domain.exceptions import CatAsAServiceException
+from cats.shared.domain.exceptions import CatAsAServiceException
 import requests
 
 

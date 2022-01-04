@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from typing import List, Optional
-from cats_as_a_service.orders.domain.models import Order
+from cats.orders.domain.models import Order
 
 
 class OrderSource(metaclass=ABCMeta):  # pragma: no cover

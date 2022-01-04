@@ -1,5 +1,5 @@
-from cats_as_a_service.subscriptions.domain.models import ID, Subscription
-from cats_as_a_service.subscriptions.infrastructure.http import HTTPSubscriptionRepository
+from cats.subscriptions.domain.models import ID, Subscription
+from cats.subscriptions.infrastructure.http import HTTPSubscriptionRepository
 
 
 def test_should_successfully_find_a_subscription(config):

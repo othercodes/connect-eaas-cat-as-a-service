@@ -10,8 +10,8 @@ import requests
 import responses
 import os
 
-from cats_as_a_service.orders.domain.contracts import OrderSource
-from cats_as_a_service.subscriptions.domain.contracts import SubscriptionSource
+from cats.orders.domain.contracts import OrderSource
+from cats.subscriptions.domain.contracts import SubscriptionSource
 
 ConnectResponse = namedtuple(
     'ConnectResponse',
