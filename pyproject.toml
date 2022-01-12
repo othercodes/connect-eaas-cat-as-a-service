@@ -6,16 +6,16 @@ authors = ["Unay Santisteban"]
 license = "MIT"
 packages = [
     { include = "caas_ext" },
-    { include = "cats_as_a_service" }
+    { include = "cats" }
 ]
 readme = "./README.md"
 
 [tool.poetry.plugins."connect.eaas.ext"]
-"extension" = "caas_ext.extension:CatAsAServiceExtension"
+"extension" = "caas_ext.extension:CatExtension"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-connect-extension-runner = "^24.5"
+connect-extension-runner = "^24.6"
 connect-processors-toolkit = { git = "https://github.com/othercodes/connect-processors-toolkit", rev = "main" }
 
 [tool.poetry.dev-dependencies]
@@ -45,7 +45,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 testpaths = "tests"
-addopts = "--cov=caas_ext --cov=cats_as_a_service --cov-report=html --cov-report=xml --cov-report=term-missing:skip-covered"
+addopts = "--cov=caas_ext --cov=cats --cov-report=term-missing:skip-covered --cov-report=html --cov-report=xml"
 
 [tool.coverage.run]
 omit = ["tests/*", "venv*/*", "setup.py"]
@@ -61,3 +61,6 @@ exclude_lines = [
     "raise NotImplementedError",
     "if __name__ == .__main__.:",
 ]
+
+[tool.coverage.html]
+skip_covered = true

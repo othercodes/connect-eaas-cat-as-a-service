@@ -3,40 +3,47 @@
 # Copyright (c) 2021, Unay Santisteban
 # All rights reserved.
 #
-from connect.processors_toolkit.requests import RequestBuilder
-from connect.processors_toolkit.application import Application
-from connect.eaas.extension import (
-    CustomEventResponse,
-    ProcessingResponse,
-    ProductActionResponse,
-    ValidationResponse,
-)
+from typing import Dict, Type
+
+from connect.processors_toolkit.application import Application, Dependencies
+from connect.processors_toolkit.application.dispatcher import WithDispatcher
+
+from cats.orders.infrastructure.http import HTTPOrderRepository
+
+from caas_ext.process.purchase import PurchaseFlow
+from caas_ext.custom_events.health_check import HealthCheckCustomEvent
 
 
-class CatAsAServiceExtension(Application):
+class CatExtension(Application, WithDispatcher):
+    def routes(self) -> Dict[str, Type]:
+        return {
+            'product.custom-event.health-check': HealthCheckCustomEvent,
+            'asset.process.purchase': PurchaseFlow,
+        }
+
+    def dependencies(self) -> Dependencies:
+        dependencies = Dependencies()
+        dependencies.to_class('order_repository', HTTPOrderRepository)
+
+        return dependencies
+
     def process_asset_purchase_request(self, request):
-        self.make('purchase_flow').process(RequestBuilder(request))
+        return self.dispatch_process(request)
 
     def process_asset_change_request(self, request):
-        self.logger.info(f"Obtained request with id {request['id']}")
-        return ProcessingResponse.done()
+        return self.dispatch_process(request)
 
     def process_asset_cancel_request(self, request):
-        self.logger.info(f"Obtained request with id {request['id']}")
-        return ProcessingResponse.done()
+        return self.dispatch_process(request)
 
     def validate_asset_purchase_request(self, request):
-        self.logger.info(f"Obtained request with id {request['id']}")
-        return ValidationResponse.done(request)
+        return self.dispatch_validation(request)
 
     def validate_asset_change_request(self, request):
-        self.logger.info(f"Obtained request with id {request['id']}")
-        return ValidationResponse.done(request)
+        return self.dispatch_validation(request)
 
     def execute_product_action(self, request):
-        self.logger.info(f"Obtained product custom action with following data: {request}")
-        return ProductActionResponse.done()
+        return self.dispatch_action(request)
 
     def process_product_custom_event(self, request):
-        self.logger.info(f"Obtained custom event with following data: {request}")
-        return CustomEventResponse.done()
+        return self.dispatch_custom_event(request)

@@ -10,7 +10,7 @@ def test_should_successfully_place_order_adding_items(fake_order_source, config)
         'amount': 3,
     }))
 
-    repository = HTTPOrderRepository(api_key=config['api_key'], api_url=config['api_url'])
+    repository = HTTPOrderRepository(cat_api_key=config['api_key'], cat_api_url=config['api_url'])
     repository.save(order)
 
     assert int(repository._get_favourites(order.id.value).headers.get('pagination-count', 0)) == 3
@@ -24,7 +24,7 @@ def test_should_successfully_place_order_removing_items(fake_order_source, confi
         'amount': 0,
     }))
 
-    repository = HTTPOrderRepository(api_key=config['api_key'], api_url=config['api_url'])
+    repository = HTTPOrderRepository(cat_api_key=config['api_key'], cat_api_url=config['api_url'])
     repository.save(order)
 
     assert int(repository._get_favourites(order.id.value).headers.get('pagination-count', 0)) == 0

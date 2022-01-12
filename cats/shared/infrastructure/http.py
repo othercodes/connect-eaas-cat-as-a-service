@@ -1,18 +1,42 @@
 from typing import List
 
-from requests import Response
+from requests import Response, delete, get, post
 
-from cats.shared.domain.exceptions import CatAsAServiceException
-import requests
+from cats.shared.domain.exceptions import (
+    CatAsAServiceClientError,
+    CatAsAServiceServerError,
+    ConfigurationError,
+)
+
+
+def _check_response(response: Response) -> Response:
+    if response.status_code >= 500:
+        raise CatAsAServiceClientError(
+            response.json().get('message'),
+            str(response.status_code),
+        )
+
+    if response.status_code >= 400:
+        raise CatAsAServiceServerError(
+            response.json().get('message'),
+            str(response.status_code),
+        )
+
+    return response
 
 
 class HTTPClient:
-    def __init__(self, api_key: str, api_url: str):
-        self._api_key = api_key
-        self._api_url = api_url
+    def __init__(self, cat_api_key: str, cat_api_url: str):
+        if not cat_api_key:
+            raise ConfigurationError('Missing api key.', 'MISSING_PARAMETER', 'cat_api_key')
+        self._api_key = cat_api_key
+
+        if not cat_api_url:
+            raise ConfigurationError('Missing api url.', 'MISSING_PARAMETER', 'cat_api_url')
+        self._api_url = cat_api_url
 
     def _search_images(self, order_type: str, categories: List[int], limit: int) -> Response:
-        response = requests.get(
+        response = get(
             url=self._api_url + 'v1/images/search',
             headers={
                 'x-api-key': self._api_key,
@@ -26,13 +50,12 @@ class HTTPClient:
             },
         )
 
-        if response.status_code != 200:
-            raise CatAsAServiceException(response.text)
+        _check_response(response)
 
         return response
 
     def _get_favourites(self, sub_id) -> Response:
-        response = requests.get(
+        response = get(
             url=self._api_url + 'v1/favourites',
             headers={
                 'x-api-key': self._api_key,
@@ -42,13 +65,12 @@ class HTTPClient:
             },
         )
 
-        if response.status_code != 200:
-            raise CatAsAServiceException(response.text)
+        _check_response(response)
 
         return response
 
     def _create_favourite(self, image_id: str, sub_id: str) -> Response:
-        response = requests.post(
+        response = post(
             url=self._api_url + 'v1/favourites',
             headers={
                 'x-api-key': self._api_key,
@@ -59,18 +81,16 @@ class HTTPClient:
             },
         )
 
-        if response.status_code != 200:
-            raise CatAsAServiceException(response.text)
+        _check_response(response)
 
         return response
 
     def _delete_favourite(self, favourite_id: str) -> None:
-        response = requests.delete(
+        response = delete(
             url=self._api_url + 'v1/favourites/' + favourite_id,
             headers={
                 'x-api-key': self._api_key,
             },
         )
 
-        if response.status_code != 200:
-            raise CatAsAServiceException(response.text)
+        _check_response(response)

@@ -219,3 +219,11 @@ def load_json():
             return json.load(file)
 
     return _load_json_file
+
+
+@pytest.fixture
+def test_path():
+    def _test_path(absolute_path_from_test: str) -> str:
+        return os.path.dirname(__file__) + absolute_path_from_test
+
+    return _test_path
