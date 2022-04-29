@@ -24,5 +24,22 @@
     ],
     "product_action_execution": [],
     "product_custom_event_processing": []
-  }
+  },
+  "variables": [
+    {
+      "name": "CAT_API_URL",
+      "initial_value": "https://api.thecatapi.com/",
+      "secure": false
+    },
+    {
+      "name": "CAT_API_KEY",
+      "initial_value": "<replace this with real value>",
+      "secure": true
+    },
+    {
+      "name": "SUBSCRIPTION_ACTIVATION_TPL",
+      "initial_value": "<replace this with real value>",
+      "secure": false
+    }
+  ]
 }
