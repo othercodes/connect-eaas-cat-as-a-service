@@ -21,7 +21,7 @@ class HTTPSubscriptionSource(SubscriptionSource):
 
 
 class HTTPSubscriptionRepository(HTTPClient, SubscriptionRepository):
-    def find(self, id: ID) -> Subscription:
+    def find(self, id: ID) -> Optional[Subscription]:
         response = self._get_favourites(id.value)
 
         return subscription_builder(HTTPSubscriptionSource({

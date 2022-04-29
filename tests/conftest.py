@@ -1,17 +1,19 @@
-import json
 from collections import namedtuple
 from collections.abc import Iterable
 from types import MethodType
-from typing import List, Optional
+from typing import List, Optional, Callable
 from urllib.parse import parse_qs
 from connect.client import ConnectClient
+import json
 import pytest
 import requests
 import responses
 import os
 
 from cats.orders.domain.contracts import OrderSource
-from cats.subscriptions.domain.contracts import SubscriptionSource
+from cats.shared.domain.models import ID
+from cats.subscriptions.domain.contracts import SubscriptionSource, SubscriptionRepository
+from cats.subscriptions.domain.models import Subscription
 
 ConnectResponse = namedtuple(
     'ConnectResponse',
@@ -178,6 +180,21 @@ def fake_subscription_source():
         return _MockSubscriptionSource(source)
 
     return _make_mock_subscription_source
+
+
+@pytest.fixture
+def fake_subscription_repository():
+    class _MockSubscriptionRepository(SubscriptionRepository):
+        def __init__(self, on_find: Callable[[ID], Optional[Subscription]]):
+            self._on_find = on_find
+
+        def find(self, id: ID) -> Optional[Subscription]:
+            return self._on_find(id)
+
+    def __(on_find: Callable[[ID], Optional[Subscription]]) -> SubscriptionRepository:
+        return _MockSubscriptionRepository(on_find)
+
+    return __
 
 
 @pytest.fixture

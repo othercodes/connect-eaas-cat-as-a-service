@@ -11,18 +11,28 @@ from cats.shared.domain.exceptions import (
 
 def _check_response(response: Response) -> Response:
     if response.status_code >= 500:
-        raise CatAsAServiceClientError(
-            response.json().get('message'),
-            str(response.status_code),
-        )
+        raise _make_server_error(response)
 
     if response.status_code >= 400:
-        raise CatAsAServiceServerError(
-            response.json().get('message'),
-            str(response.status_code),
-        )
+        raise _make_client_error(response)
 
     return response
+
+
+def _make_server_error(response: Response) -> CatAsAServiceServerError:
+    return CatAsAServiceServerError(
+        response.json().get('message'),
+        str(response.status_code),
+        {'response': response}
+    )
+
+
+def _make_client_error(response: Response) -> CatAsAServiceClientError:
+    return CatAsAServiceClientError(
+        response.json().get('message'),
+        str(response.status_code),
+        {'response': response}
+    )
 
 
 class HTTPClient:
