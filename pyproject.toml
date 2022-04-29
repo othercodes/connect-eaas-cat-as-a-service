@@ -15,11 +15,12 @@ readme = "./README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-connect-extension-runner = "^24.6"
+jsonpickle = "^2.1.0"
+connect-extension-runner = "*"
 connect-processors-toolkit = { git = "https://github.com/othercodes/connect-processors-toolkit", rev = "main" }
 
 [tool.poetry.dev-dependencies]
-connect-devops-testing-library = { git = "https://github.com/cloudblue/connect-devops-testing-library", rev = "master" }
+connect-devops-testing-library = "*"
 pytest = "^6.1.2"
 pytest-cov = "^2.10.1"
 pytest-mock = "^3.3.1"
