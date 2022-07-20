@@ -48,3 +48,4 @@ def test_processor_should_approve_request(logger, response_factory, sync_client_
     response = extension.process_asset_purchase_request(initial)
 
     asserts.task_response_status(response, 'success')
+    asserts.asset_param_value_match(initial, 'CAT_SUBSCRIPTION_ID', '^AS(-\d{4}){3}')
