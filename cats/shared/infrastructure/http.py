@@ -2,10 +2,10 @@ from typing import List
 
 from requests import Response, delete, get, post
 
-from cats.shared.domain.exceptions import (
-    CatAsAServiceClientError,
-    CatAsAServiceServerError,
-    ConfigurationError,
+from cats.shared.infrastructure.exceptions import (
+    CatServerError,
+    CatClientError,
+    CatConfigurationError,
 )
 
 
@@ -19,16 +19,16 @@ def _check_response(response: Response) -> Response:
     return response
 
 
-def _make_server_error(response: Response) -> CatAsAServiceServerError:
-    return CatAsAServiceServerError(
+def _make_server_error(response: Response) -> CatServerError:
+    return CatServerError(
         response.json().get('message'),
         str(response.status_code),
         {'response': response}
     )
 
 
-def _make_client_error(response: Response) -> CatAsAServiceClientError:
-    return CatAsAServiceClientError(
+def _make_client_error(response: Response) -> CatClientError:
+    return CatClientError(
         response.json().get('message'),
         str(response.status_code),
         {'response': response}
@@ -38,11 +38,11 @@ def _make_client_error(response: Response) -> CatAsAServiceClientError:
 class HTTPClient:
     def __init__(self, cat_api_key: str, cat_api_url: str):
         if not cat_api_key:
-            raise ConfigurationError('Missing api key.', 'MISSING_PARAMETER', 'cat_api_key')
+            raise CatConfigurationError('Missing api key.', 'MISSING_PARAMETER', 'cat_api_key')
         self._api_key = cat_api_key
 
         if not cat_api_url:
-            raise ConfigurationError('Missing api url.', 'MISSING_PARAMETER', 'cat_api_url')
+            raise CatConfigurationError('Missing api url.', 'MISSING_PARAMETER', 'cat_api_url')
         self._api_url = cat_api_url
 
     def _search_images(self, order_type: str, categories: List[int], limit: int) -> Response:

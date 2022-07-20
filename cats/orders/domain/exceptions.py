@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import List
 
-from cats.shared.domain.exceptions import CatAsAServiceException
+from cats.shared.domain.exceptions import CatException
 
 
-class OrderException(CatAsAServiceException):
+class OrderException(CatException):
     @staticmethod
     def building_failure(message: str, errors: List[Exception]) -> OrderBuildingFailure:
         return OrderBuildingFailure(message, errors)
