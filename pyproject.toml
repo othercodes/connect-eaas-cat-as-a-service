@@ -15,8 +15,7 @@ readme = "./README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-jsonpickle = "^2.1.0"
-connect-extension-runner = "*"
+connect-extension-runner = "25.*"
 connect-processors-toolkit = { git = "https://github.com/othercodes/connect-processors-toolkit", rev = "main" }
 
 [tool.poetry.dev-dependencies]
