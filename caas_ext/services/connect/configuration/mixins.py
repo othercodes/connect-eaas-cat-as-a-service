@@ -1,6 +1,6 @@
 from typing import Dict
 
-from caas_ext.connect.configuration.exceptions import MissingConfigurationParameterError
+from caas_ext.services.connect.configuration.exceptions import MissingConfigurationParameterError
 
 
 class WithConfigurationHelper:

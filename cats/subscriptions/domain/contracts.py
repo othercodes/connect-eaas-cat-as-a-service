@@ -18,3 +18,7 @@ class SubscriptionRepository(metaclass=ABCMeta):  # pragma: no cover
     @abstractmethod
     def find(self, id: ID) -> Optional[Subscription]:
         pass
+
+    @abstractmethod
+    def delete(self, id: ID) -> None:
+        pass

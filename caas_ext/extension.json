@@ -40,6 +40,16 @@
       "name": "SUBSCRIPTION_ACTIVATION_TPL",
       "initial_value": "<replace this with real value>",
       "secure": false
+    },
+    {
+      "name": "TELEMETRY_ENDPOINT",
+      "initial_value": "<replace this with real value>",
+      "secure": false
+    },
+    {
+      "name": "TELEMETRY_AUTH_TOKEN",
+      "initial_value": "<replace this with real value>",
+      "secure": true
     }
   ]
 }

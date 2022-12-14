@@ -28,3 +28,10 @@ class HTTPSubscriptionRepository(HTTPClient, SubscriptionRepository):
             'id': id.value,
             'items': [{'id': item['id'], 'url': item['image']['url']} for item in response.json()],
         }))
+
+    def delete(self, id: ID) -> None:
+        current = self._get_favourites(id.value)
+        current_items = [{'id': item['id'], 'url': item['image']['url']} for item in current.json()]
+
+        for item in current_items:
+            self._delete_favourite(str(item['id']))

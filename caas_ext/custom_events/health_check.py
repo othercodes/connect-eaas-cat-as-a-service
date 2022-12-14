@@ -1,9 +1,9 @@
 from connect.eaas.extension import CustomEventResponse
-from connect.eaas.helpers import get_environment
 from connect.processors_toolkit.application.contracts import CustomEventFlow
-from connect.processors_toolkit.configuration.exceptions import MissingConfigurationParameterError
-from connect.processors_toolkit.configuration.mixins import WithConfigurationHelper
 from connect.processors_toolkit.logger.mixins import WithBoundedLogger
+
+from caas_ext.services.connect.configuration.exceptions import MissingConfigurationParameterError
+from caas_ext.services.connect.configuration.mixins import WithConfigurationHelper
 
 from caas_ext.process.purchase import CONFIG_ASSET_ACTIVATION_TPL
 
@@ -21,7 +21,26 @@ class HealthCheckCustomEvent(CustomEventFlow, WithBoundedLogger, WithConfigurati
         ]
 
     def handle(self, request: dict) -> CustomEventResponse:
-        self.logger.info(get_environment())
+        configuration = self.validate_configuration()
+
+        sections = [
+            configuration
+        ]
+
+        service = 'ok'
+        for section in sections:
+            if 'invalid' in section['status']:
+                service = 'failure'
+
+        return CustomEventResponse.done(
+            http_status=200,
+            body={
+                'service': service,
+                'configuration': configuration
+            },
+        )
+
+    def validate_configuration(self) -> dict:
         missing = []
         for key in self.to_check:
             try:
@@ -30,16 +49,12 @@ class HealthCheckCustomEvent(CustomEventFlow, WithBoundedLogger, WithConfigurati
                 missing.append(e.parameter)
 
         if len(missing) > 0:
-            code = 'INVALID_CONFIGURATION'
-            message = 'Invalid configuration.'
-            details = [f'Missing configuration {key} parameter.' for key in missing]
+            return {
+                'status': 'invalid',
+                'issues': [f'Missing configuration {key} parameter.' for key in missing],
+            }
 
-        else:
-            code = 'CONFIGURATION_OK'
-            message = 'The configuration is correct.'
-            details = []
-
-        return CustomEventResponse.done(
-            http_status=200,
-            body={'code': code, 'message': message, 'details': details},
-        )
+        return {
+            'status': 'valid',
+            'issues': [],
+        }

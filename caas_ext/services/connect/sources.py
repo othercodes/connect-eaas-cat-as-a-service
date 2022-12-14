@@ -3,6 +3,7 @@ from typing import List, Optional
 from connect.processors_toolkit.requests import RequestBuilder
 
 from cats.orders.domain.contracts import OrderSource
+from cats.subscriptions.domain.contracts import SubscriptionSource
 
 
 class ConnectOrderSource(OrderSource):
@@ -28,3 +29,15 @@ class ConnectOrderSource(OrderSource):
             )).get('quantity', 0))
         except StopIteration:
             return 0
+
+
+class ConnectSubscriptionSource(SubscriptionSource):  # pragma: no cover
+    def __init__(self, request: RequestBuilder):
+        self._request = request
+
+    def id(self) -> Optional[str]:
+        subscription_id = self._request.asset().asset_param('CAT_SUBSCRIPTION_ID', 'value')
+        return self._request.asset().asset_id() if subscription_id == '' else subscription_id
+
+    def items(self) -> List[dict]:
+        return []

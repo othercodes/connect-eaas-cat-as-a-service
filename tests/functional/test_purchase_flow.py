@@ -1,15 +1,24 @@
+import requests
 from connect.devops_testing import fixtures, asserts
 from connect.processors_toolkit.application import Dependencies
 
 from caas_ext.extension import CatExtension
+from caas_ext.services.providers import (
+    provide_ot_observer,
+    provide_ot_tracer,
+    provide_ot_span_processor,
+    provide_ot_span_exporter,
+    Observer
+)
 from cats.orders.domain.contracts import OrderRepository
 from cats.orders.domain.models import Order
 
 
 class FakeOrderRepository(OrderRepository):
-    def __init__(self, cat_api_key: str, cat_api_url: str):
+    def __init__(self, cat_api_key: str, cat_api_url: str, ot_observer: Observer):
         self.api_key = cat_api_key
         self.api_url = cat_api_url
+        self.observer = ot_observer
 
     def save(self, order: Order) -> None:
         assert isinstance(order, Order)
@@ -18,6 +27,10 @@ class FakeOrderRepository(OrderRepository):
 def test_processor_should_approve_request(logger, response_factory, sync_client_factory, test_path):
     dependencies = Dependencies()
     dependencies.to_class('order_repository', FakeOrderRepository)
+    dependencies.provider('ot_observer', provide_ot_observer)
+    dependencies.provider('ot_tracer', provide_ot_tracer)
+    dependencies.provider('ot_span_processor', provide_ot_span_processor)
+    dependencies.provider('ot_span_exporter', provide_ot_span_exporter)
 
     builder = fixtures.make_request_builder().from_file(test_path('/functional/test_purchase_data/request.json'))
 
@@ -48,4 +61,4 @@ def test_processor_should_approve_request(logger, response_factory, sync_client_
     response = extension.process_asset_purchase_request(initial)
 
     asserts.task_response_status(response, 'success')
-    asserts.asset_param_value_match(initial, 'CAT_SUBSCRIPTION_ID', '^AS(-\d{4}){3}')
+    asserts.asset_param_value_match(initial, 'CAT_SUBSCRIPTION_ID', '^AS(-[0-9]{4}){3}')

@@ -3,15 +3,28 @@
 # Copyright (c) 2021, Unay Santisteban
 # All rights reserved.
 #
-from typing import Dict, Type
+import os
+from logging import LoggerAdapter
+from typing import Dict, Type, Union, Optional
 
+import toml
+from connect.client import AsyncConnectClient, ConnectClient
 from connect.processors_toolkit.application import Application, Dependencies
 from connect.processors_toolkit.application.dispatcher import WithDispatcher
 
+from caas_ext.process.cancel import CancelFlow
+from caas_ext.validations.purchase import ValidatePurchaseFlow
 from cats.orders.infrastructure.http import HTTPOrderRepository
 
 from caas_ext.process.purchase import PurchaseFlow
 from caas_ext.custom_events.health_check import HealthCheckCustomEvent
+from caas_ext.services.providers import (
+    provide_ot_span_exporter,
+    provide_ot_span_processor,
+    provide_ot_tracer,
+    provide_ot_observer,
+)
+from cats.subscriptions.infrastructure.http import HTTPSubscriptionRepository
 
 
 class CatExtension(Application, WithDispatcher):
@@ -19,11 +32,19 @@ class CatExtension(Application, WithDispatcher):
         return {
             'product.custom-event.health-check': HealthCheckCustomEvent,
             'asset.process.purchase': PurchaseFlow,
+            'asset.process.cancel': CancelFlow,
+            'asset.validate.purchase': ValidatePurchaseFlow,
         }
 
     def dependencies(self) -> Dependencies:
         dependencies = Dependencies()
+        dependencies.to_instance('extension_name', 'cat_as_a_service')
         dependencies.to_class('order_repository', HTTPOrderRepository)
+        dependencies.to_class('subscription_repository', HTTPSubscriptionRepository)
+        dependencies.provider('ot_observer', provide_ot_observer)
+        dependencies.provider('ot_tracer', provide_ot_tracer)
+        dependencies.provider('ot_span_processor', provide_ot_span_processor)
+        dependencies.provider('ot_span_exporter', provide_ot_span_exporter)
 
         return dependencies
 

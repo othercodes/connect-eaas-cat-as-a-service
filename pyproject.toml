@@ -15,8 +15,13 @@ readme = "./README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-connect-extension-runner = "25.*"
+connect-extension-runner = "25.4"
 connect-processors-toolkit = { git = "https://github.com/othercodes/connect-processors-toolkit", rev = "main" }
+opentelemetry-sdk = "^1.11.1"
+opentelemetry-exporter-otlp-proto-http = "^1.11.1"
+opentelemetry-instrumentation-requests = "*"
+protobuf = "^3.20.0"
+toml = "^0.10.2"
 
 [tool.poetry.dev-dependencies]
 connect-devops-testing-library = "*"
